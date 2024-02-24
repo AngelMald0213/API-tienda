@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <title>Tienda de Electronica</title>
+</head>
+<body>
+    <div data-role="page">
+        <div data-role="header">
+            <h1>Electronica</h1>
+            <a href="#" data-role="button" data-icon="bars" data-iconpos="notext" id="menuBtnEdicion">Menú</a>
+        </div>
+        <form action="/<%= product.barcode %>" method="POST">
+            <div data-role="fieldcontain">
+                <label>Codigo de barras:</label>
+                <input type="text" name="barcode" id="txt_barcode" value="<%= product.barcode %>">
+            </div>
+            <div data-role="fieldcontain">
+                <label>Nombre del Producto:</label>
+                <input type="text" name="description" id="txt_description" value="<%= product.description %>">
+            </div>
+            <div data-role="fieldcontain">
+                <label>Precio:</label>
+                <input type="text" name="price" id="txt_price" value="<%= product.price %>">
+            </div>
+            <input type="submit" value="Guardar">
+        </form>
+        
+        
+            </div>
+        <div data-role="footer">
+            <h5>Developed by Angel</h5>
+        </div>
+    </div>
+</body>
+</html>

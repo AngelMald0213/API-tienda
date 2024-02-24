@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"/>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script> 
+    <link rel="stylesheet" href="../public/style/style.css">
+    <title>Tienda de Electronica</title>
+
+    <style>
+        /* Aquí van los estilos CSS */
+        #index {
+            position: fixed;
+            top: 0;
+            left: -250px; 
+            width: 250px;
+            height: 100%;
+            background-color: #f4f4f4; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            transition: left 0.3s ease; 
+            padding-top: 60px; 
+        }
+
+        /* Estilos para el título del menú */
+        #index h2 {
+            font-size: 1.5em;   
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        /* Estilos para los enlaces del menú */
+        #index ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #index ul li {
+            margin-bottom: 10px;
+            text-align: center; 
+        }
+
+        #index ul li a {
+            display: block;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            text-decoration: none;
+            color: #333; 
+            background-color: #fff; 
+            border-radius: 25px; 
+            transition: background-color 0.3s ease;
+        }
+
+        #index ul li a:hover {
+            background-color: #ddd;
+        }
+
+        /* Estilos para el contenido adicional */
+        .additionalContent {
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .additionalContent img {
+            max-width: 100%;
+            border-radius: 5px;
+        }
+
+        .additionalContent p {
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        /* Estilos para el footer */
+        [data-role="footer"] {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+
+<script>
+    $(document).on("pagecreate", function() {
+        var $menuPanel = $("#index");
+        var $menuBtn = $("#menuBtn");
+        var $menuBtnCatalogo = $("#menuBtnCatalogo");
+        var $menuBtnEdicion = $("#menuBtnEdicion");
+
+        // Función para abrir y cerrar el panel
+        function togglePanel() {
+            if ($menuPanel.css("left") === "-250px") {
+                $menuPanel.css("left", "0px");
+            } else {
+                $menuPanel.css("left", "-250px");
+            }
+        }
+
+        // Evento click para el botón del menú principal
+        $menuBtn.on("click", function(event) {
+            event.stopPropagation();
+            togglePanel();
+        });
+
+        // Evento click para el botón del menú en la página de catálogo
+        $menuBtnCatalogo.on("click", function(event) {
+            event.stopPropagation();
+            togglePanel();
+        });
+
+        // Evento click para el botón del menú en la página de edición
+        $menuBtnEdicion.on("click", function(event) {
+            event.stopPropagation();
+            togglePanel();
+        });
+
+        // Evento click en cualquier parte del documento para cerrar el panel si está abierto
+        $(document).on("click", function(event) {
+            if (!$(event.target).closest("#index").length && !$(event.target).closest("#menuBtn").length && !$(event.target).closest("#menuBtnCatalogo").length && !$(event.target).closest("#menuBtnEdicion").length) {
+                $menuPanel.css("left", "-250px");
+            }
+        });
+
+        // Evento click en los enlaces del menú
+        $("#index ul li a").on("click", function(event) {
+            event.preventDefault();
+            var targetPage = $(this).attr("href");
+            $menuPanel.css("left", "-250px");
+            if (targetPage !== "#catalogo" || window.location.hash !== "#catalogo") {
+                $.mobile.navigate(targetPage);
+            }
+        });
+    });
+
+
+
+    
+</script>
+
+
+
+</head>
+<body>
+   
+    <div data-role="panel" id="index">
+        <h2>Menú</h2>
+        <ul>
+            <li><a href="/products/inicio" data-icon="shop">Inicio</a></li>
+            <li><a href="/products/catalogo" data-icon="grid">Catálogo</a></li>
+            <li><a href="/products/edicion" data-icon="user">Editar</a></li>
+        </ul>
+    </div>
+
+
+    <div data-role="page" id="edicion">
+        <div data-role="header" style="overflow:hidden;" data-theme="b">
+            <h1>Edicion</h1>
+            <a href="#" data-role="button" data-icon="bars" data-iconpos="notext" id="menuBtnEdicion">Menú</a>
+            <!-- /navbar -->
+        </div><!-- /header -->
+        <div data-role="content">
+            <form>
+                <input data-type="search" id="searchForCollapsibleSet">
+            </form>
+            <div data-role="collapsibleset" data-filter="true" data-inset="true" id="collapsiblesetForFilter" data-input="#searchForCollapsibleSet">    
+                <% products.forEach((product)=>{ %>
+                    <div data-role="collapsible" data-filtertext="<%= product.description %>">
+                        <h3><%= product.description %></h3>
+                        <ul data-role="listview" data-inset="false">
+                        <li>Codigo de barras: <%= product.barcode%></li>
+                        <li>Descripción: <%= product.description %></li>
+                        <li>Precio: <%= product.price %></li>
+                        <button><a style="text-decoration: none; color: black;" href="/<%= product.barcode %>">Editar</a></button>
+                        <button><a style="text-decoration: none; color: black;" href="/deleteOne/<%= product.barcode %>">Eliminar</a></button>
+                    </ul>
+                        </div>
+                <% }) %>
+        </div>
+        
+        </div>
+        <div data-role="footer" data-position="fixed" data-theme="b">
+            <h5>Developed by Angel</h5>
+        </div>  
+    </div>
+</body>
+</html>

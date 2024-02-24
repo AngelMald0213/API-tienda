@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"/>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script> 
+    <link rel="stylesheet" href="../public/style/style.css">
+    <title>Tienda de Electronica</title>
+
+    <style>
+        /* Aquí van los estilos CSS */
+        #index {
+            position: fixed;
+            top: 0;
+            left: -250px; 
+            width: 250px;
+            height: 100%;
+            background-color: #f4f4f4; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            transition: left 0.3s ease; 
+            padding-top: 60px; 
+        }
+
+        /* Estilos para el título del menú */
+        #index h2 {
+            font-size: 1.5em;   
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        /* Estilos para los enlaces del menú */
+        #index ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #index ul li {
+            margin-bottom: 10px;
+            text-align: center; 
+        }
+
+        #index ul li a {
+            display: block;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            text-decoration: none;
+            color: #333; 
+            background-color: #fff; 
+            border-radius: 25px; 
+            transition: background-color 0.3s ease;
+        }
+
+        #index ul li a:hover {
+            background-color: #ddd;
+        }
+
+        /* Estilos para el contenido adicional */
+        .additionalContent {
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .additionalContent img {
+            max-width: 100%;
+            border-radius: 5px;
+        }
+
+        .additionalContent p {
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        /* Estilos para el footer */
+        [data-role="footer"] {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+
+<script>
+    $(document).on("pagecreate", function() {
+        var $menuPanel = $("#index");
+        var $menuBtn = $("#menuBtn");
+        var $menuBtnCatalogo = $("#menuBtnCatalogo");
+        var $menuBtnEdicion = $("#menuBtnEdicion");
+
+        // Función para abrir y cerrar el panel
+        function togglePanel() {
+            if ($menuPanel.css("left") === "-250px") {
+                $menuPanel.css("left", "0px");
+            } else {
+                $menuPanel.css("left", "-250px");
+            }
+        }
+
+        // Evento click para el botón del menú principal
+        $menuBtn.on("click", function(event) {
+            event.stopPropagation();
+            togglePanel();
+        });
+
+        // Evento click para el botón del menú en la página de catálogo
+        $menuBtnCatalogo.on("click", function(event) {
+            event.stopPropagation();
+            togglePanel();
+        });
+
+        // Evento click para el botón del menú en la página de edición
+        $menuBtnEdicion.on("click", function(event) {
+            event.stopPropagation();
+            togglePanel();
+        });
+
+        // Evento click en cualquier parte del documento para cerrar el panel si está abierto
+        $(document).on("click", function(event) {
+            if (!$(event.target).closest("#index").length && !$(event.target).closest("#menuBtn").length && !$(event.target).closest("#menuBtnCatalogo").length && !$(event.target).closest("#menuBtnEdicion").length) {
+                $menuPanel.css("left", "-250px");
+            }
+        });
+
+        // Evento click en los enlaces del menú
+        $("#index ul li a").on("click", function(event) {
+            event.preventDefault();
+            var targetPage = $(this).attr("href");
+            $menuPanel.css("left", "-250px");
+            if (targetPage !== "#catalogo" || window.location.hash !== "#catalogo") {
+                $.mobile.navigate(targetPage);
+            }
+        });
+    });
+
+
+
+    
+</script>
+
+
+
+</head>
+<body>
+   
+    <div data-role="panel" id="index">
+        <h2>Menú</h2>
+        <ul>
+            <li><a href="/products/inicio" data-icon="shop">Inicio</a></li>
+            <li><a href="/products/catalogo" data-icon="grid">Catálogo</a></li>
+            <li><a href="/products/edicion" data-icon="user">Editar</a></li>
+        </ul>
+    </div>
+
+
+    <div id="mainContent" data-role="page">
+        <div data-role="header" data-theme="b">
+            <h1>Inicio</h1>
+            <a href="#" data-role="button" data-icon="bars" data-iconpos="notext" id="menuBtn">Menú</a>
+        </div>
+        <div data-role="content">
+            <div class="additionalContent">
+                <img src="https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/media/image/2020/12/11-mitos-electrodomesticos-hora-dejes-creerte-2157733.jpg?tf=3840x" alt="Imagen de ejemplo">
+                <p>¡Bienvenido a nuestra tienda en línea! Encuentra todo lo que necesitas para tu hogar.</p>
+                <a href="#catalogo" class="ui-btn">Explorar ahora</a>
+            </div> 
+        </div>
+
+        <div data-role="content">
+            <div class="additionalContent">
+                <img src="https://phantom-marca-mx.unidadeditorial.es/5478913a338bef5a8ada47afba432a9f/resize/828/f/jpg/mx/assets/multimedia/imagenes/2023/10/12/16970838437716.jpg" alt="Imagen de ejemplo">
+                <p>¡Bienvenido a nuestra tienda en línea! Explora nuestra increíble selección de los últimos y más emocionantes modelos de teléfonos celulares.</p>
+                <a href="#catalogo" class="ui-btn">Explorar ahora</a>
+            </div>
+        </div>
+
+        <div data-role="content">
+            <div class="additionalContent">
+                <img src="https://www.elmueble.com/medio/2023/05/18/00531260_00000000_55f91280_230518133411_900x900.jpg" alt="Imagen de ejemplo">
+                <p>¡Bienvenido a nuestra tienda en línea! Descubre el lugar perfecto para transformar tu hogar en un oasis de estilo y comodidad.</p>
+                <a href="#catalogo" class="ui-btn">Explorar ahora</a> 
+            </div>
+            <a href="#catalogo" data-role="button" data-theme="b">Ver Catálogo</a>
+        </div>
+        
+        <!-- Contenido del formulario -->
+        
+        <div data-role="footer" data-position="fixed" data-theme="b">
+            <h5>Developed by Angel</h5>
+        </div>
+    </div>
+
+    
+</body>
+</html>
