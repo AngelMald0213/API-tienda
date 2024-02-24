@@ -87,7 +87,7 @@ export const mostrarPaginaInicio = async (req, res) => {
 export const mostrarPaginaCatalogo = async (req, res) => {
     try {
         const products = await ProductDAO.getAll();
-        res.render('../src/views/Catalogo.ejs', { products });
+        res.render('../src/views/catalogo.ejs', { products });
     } catch (error) {
         res.json({ status: "Server unavailable" });
     }
